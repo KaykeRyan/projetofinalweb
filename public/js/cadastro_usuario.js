@@ -15,7 +15,7 @@ $(document).ready(function() {
             },
             success: function(response) {
                 if (response.erro == 'n') {
-                    window.location.href = "/home";
+                    window.location.href = "/cadastro_local";
                 } else {
                     Swal.fire({ icon: 'error', title: 'Erro!', text: response.mensagem });
                 }

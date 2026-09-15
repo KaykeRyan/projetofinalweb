@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro de Usuário</title>
+    <title>Cadastro de Sala</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
@@ -81,8 +81,8 @@
             font-weight: 500;
         }
 
-        /* Estilo dos inputs */
-        .form-control {
+        /* Estilo dos inputs e selects */
+        .form-control, .form-select {
             background-color: #0a0a0a !important;
             border: 1px solid #333 !important;
             color: #ffffff !important;
@@ -91,7 +91,7 @@
             transition: all 0.3s ease;
         }
 
-        .form-control:focus {
+        .form-control:focus, .form-select:focus {
             background-color: #0a0a0a !important;
             border-color: #ff1a1a !important;
             box-shadow: 0 0 0 0.25rem rgba(255, 26, 26, 0.25) !important;
@@ -102,11 +102,10 @@
             color: #666 !important;
         }
 
-        /* Ajuste para o ícone do calendário no input de data */
-        .form-control[type="date"]::-webkit-calendar-picker-indicator {
-            filter: invert(1);
-            opacity: 0.6;
-            cursor: pointer;
+        /* Ajuste para as opções do select no fundo escuro */
+        .form-select option {
+            background-color: #141414;
+            color: #ffffff;
         }
 
         /* Estilo do botão */
@@ -131,59 +130,52 @@
         .btn-primary:active {
             transform: translateY(0);
         }
-
-        /* Ajuste para o SweetAlert2 (caso seja usado) */
-        .swal2-popup {
-            background-color: #141414 !important;
-            color: #ffffff !important;
-            border: 1px solid #333 !important;
-        }
-        .swal2-title {
-            color: #ffffff !important;
-        }
-        .swal2-confirm {
-            background-color: #ff1a1a !important;
-        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h3 class="text-center mt-4 mb-4">Cadastro de Usuário</h3>
+        <h3 class="text-center mt-4 mb-4">Cadastro de Sala</h3>
 
-        <form id="form_cadastro" method="POST" action="{{ url('/cadastro_usuario') }}" class="row g-3 p-4 rounded">
+        <form id="form_cadastro_local" method="POST" action="{{ url('/cadastro_local') }}" class="row g-3 p-4 rounded">
             @csrf
+
             <div class="col-lg-6 col-md-6 col-sm-12">
-                <label for="nome" class="form-label">Nome:</label>
-                <input type="text" class="form-control" id="nome" name="nome" placeholder="Digite seu nome" required>
+                <label for="bloco_id" class="form-label">Bloco:</label>
+                <select class="form-select" id="bloco_id" name="bloco_id" required>
+                    <option value="" selected disabled>Selecione o bloco</option>
+                    @foreach ($blocos as $bloco)
+                        <option value="{{ $bloco->id }}">{{ $bloco->nome }} — {{ $bloco->descricao }}</option>
+                    @endforeach
+                </select>
             </div>
 
             <div class="col-lg-6 col-md-6 col-sm-12">
-                <label for="email" class="form-label">Email:</label>
-                <input type="email" class="form-control" id="email" name="email" placeholder="Digite seu email" required>
+                <label for="tipo_local_id" class="form-label">Tipo de sala:</label>
+                <select class="form-select" id="tipo_local_id" name="tipo_local_id" required>
+                    <option value="" selected disabled>Selecione o tipo</option>
+                    @foreach ($tipos as $tipo)
+                        <option value="{{ $tipo->id }}">{{ $tipo->nome }}</option>
+                    @endforeach
+                </select>
             </div>
 
-            <div class="col-lg-6 col-md-6 col-sm-12">
-                <label for="senha" class="form-label">Senha:</label>
-                <input type="password" class="form-control" id="senha" name="senha" placeholder="Mínimo 6 caracteres" minlength="6" required>
+            <div class="col-lg-8 col-md-8 col-sm-12">
+                <label for="nome" class="form-label">Nome da sala:</label>
+                <input type="text" class="form-control" id="nome" name="nome" placeholder="Ex: Sala de Informática 1" required>
             </div>
 
-            <div class="col-lg-6 col-md-6 col-sm-12">
-                <label for="data_nascimento" class="form-label">Data de nascimento:</label>
-                <input type="date" class="form-control" id="data_nascimento" name="data_nascimento" required>
-            </div>
-
-            <div class="col-lg-6 col-md-6 col-sm-12">
-                <label for="cpf" class="form-label">CPF:</label>
-                <input type="text" class="form-control" id="cpf" name="cpf" placeholder="000.000.000-00" required>
+            <div class="col-lg-4 col-md-4 col-sm-12">
+                <label for="identificador" class="form-label">Identificador (opcional):</label>
+                <input type="text" class="form-control" id="identificador" name="identificador" placeholder="Ex: B4-SI1">
             </div>
 
             <div class="col-12 text-end mt-4">
-                <button type="submit" class="btn btn-primary">Cadastrar</button>
+                <button type="submit" class="btn btn-primary">Cadastrar Sala</button>
             </div>
         </form>
     </div>
-
+    
     <!-- Script original mantido -->
-    <script src="{{ asset('js/cadastro_usuario.js') }}"></script>
+    <script src="{{ asset('js/cadastro_local.js') }}"></script>
 </body>
 </html>
