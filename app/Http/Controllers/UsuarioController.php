@@ -84,4 +84,117 @@ class UsuarioController extends Controller
             'token' => $token,
         ], 200);
     }
+
+    public function editar(Request $request)
+    {
+        $usuario = $request->attributes->get('usuario_autenticado');
+
+        return view('editar_usuario', compact('usuario'));
+    }
+
+    public function atualizar(Request $request)
+    {
+        $usuario = $request->attributes->get('usuario_autenticado');
+
+        $request->validate([
+            'nome' => 'required|string|max:255',
+            'email' => 'required|email|unique:usuario,email,' . $usuario->id,
+            'data_nascimento' => 'required|date',
+            'cpf' => 'required|string|max:14|unique:usuario,cpf,' . $usuario->id,
+            'senha' => 'nullable|string|min:6',
+        ]);
+
+        $usuario->nome = $request->nome;
+        $usuario->email = $request->email;
+        $usuario->data_nascimento = $request->data_nascimento;
+        $usuario->cpf = $request->cpf;
+
+        if ($request->filled('senha')) {
+            $usuario->senha = bcrypt($request->senha);
+        }
+
+        $usuario->save();
+
+        return redirect()->route('home')->with('sucesso', 'Dados atualizados com sucesso!');
+    }
+
+    public function excluir(Request $request)
+    {
+        $usuario = $request->attributes->get('usuario_autenticado');
+
+        $usuario->delete();
+
+        if ($request->hasSession()) {
+            $request->session()->flush();
+        }
+
+        return redirect()->route('cadastro_usuario')->with('sucesso', 'Conta excluída com sucesso.');
+    }
+
+        public function api_index(Request $request)
+    {
+        $usuarios = Usuario::select('id', 'nome', 'email', 'cpf', 'data_nascimento')
+            ->orderBy('nome')
+            ->get();
+
+        return response()->json([
+            'erro' => 'n',
+            'usuarios' => $usuarios,
+        ]);
+    }
+
+    public function api_atualizar(Request $request, $id)
+    {
+        $usuarioLogado = $request->attributes->get('usuario_autenticado');
+
+        if ((int) $id !== $usuarioLogado->id) {
+            return response()->json([
+                'erro' => 's',
+                'mensagem' => 'Você só pode editar sua própria conta.',
+            ], 403);
+        }
+
+        $request->validate([
+            'nome' => 'required|string|max:255',
+            'email' => 'required|email|unique:usuario,email,' . $usuarioLogado->id,
+            'data_nascimento' => 'required|date',
+            'cpf' => 'required|string|max:14|unique:usuario,cpf,' . $usuarioLogado->id,
+            'senha' => 'nullable|string|min:6',
+        ]);
+
+        $usuarioLogado->nome = $request->nome;
+        $usuarioLogado->email = $request->email;
+        $usuarioLogado->data_nascimento = $request->data_nascimento;
+        $usuarioLogado->cpf = $request->cpf;
+
+        if ($request->filled('senha')) {
+            $usuarioLogado->senha = bcrypt($request->senha);
+        }
+
+        $usuarioLogado->save();
+
+        return response()->json([
+            'erro' => 'n',
+            'mensagem' => 'Dados atualizados com sucesso!',
+        ]);
+    }
+
+    public function api_excluir(Request $request, $id)
+    {
+        $usuarioLogado = $request->attributes->get('usuario_autenticado');
+
+        if ((int) $id !== $usuarioLogado->id) {
+            return response()->json([
+                'erro' => 's',
+                'mensagem' => 'Você só pode excluir sua própria conta.',
+            ], 403);
+        }
+
+        $usuarioLogado->delete();
+
+        return response()->json([
+            'erro' => 'n',
+            'mensagem' => 'Conta excluída com sucesso.',
+        ]);
+    }
 }

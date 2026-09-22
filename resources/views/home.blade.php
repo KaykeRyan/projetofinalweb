@@ -103,8 +103,222 @@
             100% { top: 100%; }
         }
 
+        @keyframes mortal {
+            0%   { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
         .anim-fade-in { animation: fadeInUp 0.8s ease-out forwards; }
         .anim-float { animation: floatIcon 3s ease-in-out infinite; }
+
+        .dando-mortal {
+            animation: mortal 1s ease-in-out;
+            transform-origin: center center;
+        }
+
+        /* =========================================
+           ESCORREGAR PARA BAIXO + ABISMO
+           ========================================= */
+        .escorregando {
+            animation: escorregarBaixo 2s ease-in-out forwards;
+        }
+
+        @keyframes escorregarBaixo {
+            0%   { transform: translateY(0); opacity: 1; }
+            100% { transform: translateY(120vh); opacity: 0; }
+        }
+
+        .abismo {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: radial-gradient(circle at center, #1a0000 0%, #000000 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9998;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease;
+        }
+
+        .abismo.visivel {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .abismo h2 {
+            color: #ff1a1a;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            font-size: 3rem;
+            text-shadow: 0 0 30px rgba(255, 26, 26, 0.9);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .abismo p {
+            color: #b0b0b0;
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .btn-voltar {
+            background: linear-gradient(135deg, #ff1a1a 0%, #990000 100%) !important;
+            color: #fff !important;
+            border: 2px solid #ff4d4d !important;
+            border-radius: 50px !important;
+            padding: 12px 32px !important;
+            font-weight: 700 !important;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 0 0 20px rgba(255, 26, 26, 0.6);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .btn-voltar:hover {
+            transform: scale(1.08);
+            box-shadow: 0 0 35px rgba(255, 26, 26, 0.9);
+        }
+
+        /* =========================================
+           MACACOS CORRENDO
+           ========================================= */
+        .macaco-corredor {
+            position: fixed;
+            bottom: 10px;
+            font-size: 3rem;
+            z-index: 9999;
+            pointer-events: none;
+            user-select: none;
+            animation: correrMacaco linear forwards;
+            filter: drop-shadow(0 0 8px rgba(255, 26, 26, 0.6));
+            will-change: transform, left;
+        }
+
+        @keyframes correrMacaco {
+            0% {
+                left: -80px;
+                transform: translateY(0) rotate(0deg);
+            }
+            25% {
+                transform: translateY(-25px) rotate(-10deg);
+            }
+            50% {
+                transform: translateY(0) rotate(0deg);
+            }
+            75% {
+                transform: translateY(-25px) rotate(10deg);
+            }
+            100% {
+                left: 110vw;
+                transform: translateY(0) rotate(0deg);
+            }
+        }
+
+        /* =========================================
+           MACACO XINGANDO
+           ========================================= */
+        .macaco-xingao-wrapper {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 9999;
+            display: flex;
+            align-items: flex-end;
+            gap: 15px;
+            opacity: 0;
+            transform: translateY(50px) scale(0.5);
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            pointer-events: none;
+        }
+
+        .macaco-xingao-wrapper.visivel {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            pointer-events: auto;
+        }
+
+        .macaco-emoji {
+            font-size: 5rem;
+            animation: balancarMacaco 1.5s ease-in-out infinite;
+            filter: drop-shadow(0 0 15px rgba(255, 26, 26, 0.7));
+        }
+
+        @keyframes balancarMacaco {
+            0%, 100% { transform: rotate(-5deg); }
+            50%      { transform: rotate(5deg); }
+        }
+
+        .balao-fala {
+            background-color: #141414;
+            border: 2px solid #ff1a1a;
+            border-radius: 16px;
+            padding: 18px 22px;
+            max-width: 320px;
+            box-shadow: 0 0 30px rgba(255, 26, 26, 0.5);
+            position: relative;
+        }
+
+        .balao-fala::after {
+            content: '';
+            position: absolute;
+            bottom: 20px;
+            left: -14px;
+            width: 0;
+            height: 0;
+            border-top: 12px solid transparent;
+            border-bottom: 12px solid transparent;
+            border-right: 14px solid #ff1a1a;
+        }
+
+        .balao-fala::before {
+            content: '';
+            position: absolute;
+            bottom: 22px;
+            left: -11px;
+            width: 0;
+            height: 0;
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            border-right: 12px solid #141414;
+            z-index: 1;
+        }
+
+        .balao-fala p {
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 1rem;
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        .balao-fala .fechar-xinga {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: #ff1a1a;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            font-weight: 900;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(255, 26, 26, 0.8);
+            transition: all 0.2s ease;
+        }
+
+        .balao-fala .fechar-xinga:hover {
+            transform: scale(1.15);
+            background: #e60000;
+        }
 
         /* =========================================
            TIPOGRAFIA
@@ -203,6 +417,31 @@
         }
 
         /* =========================================
+           BOTÕES DE AÇÃO NOS CARDS
+           ========================================= */
+        .card-info .btn-outline-light {
+            border-color: #555;
+            color: #e0e0e0;
+        }
+
+        .card-info .btn-outline-light:hover {
+            background-color: #333;
+            border-color: #777;
+            color: #fff;
+        }
+
+        .card-info .btn-outline-danger {
+            border-color: #ff1a1a;
+            color: #ff6a6a;
+        }
+
+        .card-info .btn-outline-danger:hover {
+            background-color: #ff1a1a;
+            border-color: #ff1a1a;
+            color: #fff;
+        }
+
+        /* =========================================
            BOTÃO CENTRAL ACIONAR
            ========================================= */
         .btn-acionar {
@@ -254,6 +493,74 @@
         @keyframes pulseRing {
             0% { transform: scale(1); opacity: 0.7; }
             100% { transform: scale(1.5); opacity: 0; }
+        }
+
+        /* =========================================
+           BOTÕES DE BRINCADEIRA
+           ========================================= */
+        .btn-mortal,
+        .btn-mortal-escorregar,
+        .btn-macacos,
+        .btn-macaco-xinga {
+            border-radius: 50px !important;
+            padding: 12px 24px !important;
+            font-weight: 900 !important;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #fff !important;
+            border: 3px solid #ff4d4d !important;
+            transition: all 0.3s ease;
+            font-size: 0.8rem;
+            cursor: pointer;
+        }
+
+        .btn-mortal {
+            background: linear-gradient(135deg, #ff1a1a 0%, #990000 100%);
+            box-shadow: 0 0 20px rgba(255, 26, 26, 0.6);
+        }
+
+        .btn-mortal:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 35px rgba(255, 26, 26, 0.9);
+        }
+
+        .btn-mortal-escorregar {
+            background: linear-gradient(135deg, #ff1a1a 0%, #990000 100%);
+            box-shadow: 0 0 20px rgba(255, 26, 26, 0.6);
+        }
+
+        .btn-mortal-escorregar:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 35px rgba(255, 26, 26, 0.9);
+        }
+
+        .btn-macacos {
+            background: linear-gradient(135deg, #8B5A2B 0%, #4a2c0a 100%);
+            border-color: #c98a3c !important;
+            box-shadow: 0 0 20px rgba(201, 138, 60, 0.5);
+        }
+
+        .btn-macacos:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 35px rgba(201, 138, 60, 0.9);
+        }
+
+        .btn-macaco-xinga {
+            background: linear-gradient(135deg, #8B5A2B 0%, #4a2c0a 100%);
+            border-color: #c98a3c !important;
+            box-shadow: 0 0 20px rgba(201, 138, 60, 0.5);
+        }
+
+        .btn-macaco-xinga:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 35px rgba(201, 138, 60, 0.9);
+        }
+
+        .btn-mortal:active,
+        .btn-mortal-escorregar:active,
+        .btn-macacos:active,
+        .btn-macaco-xinga:active {
+            transform: scale(0.95);
         }
 
         /* =========================================
@@ -350,7 +657,7 @@
             border: 2px solid #ff1a1a;
             box-shadow: 0 0 25px rgba(255, 26, 26, 0.3);
             transition: all 0.3s ease;
-            cursor: pointer; /* Novo: cursor de clique */
+            cursor: pointer;
         }
 
         .img-projeto:hover {
@@ -359,7 +666,6 @@
             border-color: #ff4d4d;
         }
 
-        /* Moldura circular para a logo */
         .logo-wrapper {
             width: 100px;
             height: 100px;
@@ -369,7 +675,7 @@
             box-shadow: 0 0 25px rgba(255, 26, 26, 0.6);
             margin: 0 auto;
             transition: all 0.3s ease;
-            cursor: pointer; /* Novo: cursor de clique */
+            cursor: pointer;
         }
 
         .logo-wrapper:hover {
@@ -383,7 +689,6 @@
             object-fit: cover;
         }
 
-        /* Container de imagem com altura fixa */
         .img-container {
             height: 250px;
             border-radius: 12px;
@@ -491,11 +796,15 @@
     <!-- Efeito de brilho de fundo -->
     <div class="glow-bg"></div>
 
-    <div class="container py-5 position-relative" style="z-index: 1;">
+    @if (session('sucesso'))
+        <div class="alert alert-success position-relative" style="z-index: 2; margin: 20px auto 0; max-width: 800px;">
+            {{ session('sucesso') }}
+        </div>
+    @endif
+
+    <div class="container py-5 position-relative" style="z-index: 1;" id="conteudoPrincipal">
         
-        <!-- =========================================
-             CABEÇALHO COM LOGO (CLICÁVEL)
-             ========================================= -->
+        <!-- CABEÇALHO COM LOGO -->
         <div class="row align-items-center mb-5 anim-fade-in">
             <div class="col-md-2 text-center mb-3 mb-md-0">
                 <div class="logo-wrapper" data-bs-toggle="modal" data-bs-target="#modalImagem">
@@ -510,9 +819,7 @@
             </div>
         </div>
 
-        <!-- =========================================
-             CARDS DE INFO + BOTÃO CENTRAL
-             ========================================= -->
+        <!-- CARDS DE INFO + BOTÕES -->
         <div class="row align-items-center g-4 mb-5 anim-fade-in">
             <!-- Card de Usuário -->
             <div class="col-lg-4 col-md-12">
@@ -523,16 +830,35 @@
                         <p><strong>Email:</strong> {{ $usuario->email ?? '-' }}</p>
                         <p><strong>CPF:</strong> {{ $usuario->cpf ?? '-' }}</p>
                         <p><strong>Data de nascimento:</strong> {{ $usuario->data_nascimento ?? '-' }}</p>
+
+                        @if ($usuario)
+                            <div class="d-flex gap-2 mt-3">
+                                <a href="{{ route('usuario.editar') }}" class="btn btn-sm btn-outline-light">Editar</a>
+                                <form action="{{ route('usuario.excluir') }}" method="POST" class="d-inline"
+                                      onsubmit="return confirm('Tem certeza que deseja excluir sua conta? Essa ação não pode ser desfeita.');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-sm btn-outline-danger">Excluir</button>
+                                </form>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>
 
-            <!-- Botão central -->
-            <div class="col-lg-4 col-md-12 d-flex justify-content-center py-4">
-                <div class="btn-wrapper">
+            <!-- Botão central + BOTÕES DE BRINCADEIRA -->
+            <div class="col-lg-4 col-md-12 d-flex flex-column justify-content-center align-items-center py-4">
+                <div class="btn-wrapper mb-4">
                     <button type="button" class="btn btn-acionar" disabled>
                         ACIONAR
                     </button>
+                </div>
+
+                <div class="d-flex flex-column gap-2 align-items-center" style="width: 100%; max-width: 250px;">
+                    <button type="button" class="btn-mortal w-100" id="btnMortal">🤸 DAR UM MORTAL</button>
+                    <button type="button" class="btn-mortal-escorregar w-100" id="btnMortalEscorregar">🕳️ MORTAL + ESCORREGAR</button>
+                    <button type="button" class="btn-macacos w-100" id="btnMacacos">🐒 CHUVA DE MACACOS</button>
+                    <button type="button" class="btn-macaco-xinga w-100" id="btnMacacoXinga">🐵 MACACO XINGANDO</button>
                 </div>
             </div>
 
@@ -546,6 +872,16 @@
                             <p><strong>Bloco:</strong> {{ $local->bloco->nome ?? '-' }}</p>
                             <p><strong>Tipo:</strong> {{ $local->tipoLocal->nome ?? '-' }}</p>
                             <p><strong>Identificador:</strong> {{ $local->identificador ?? '-' }}</p>
+
+                            <div class="d-flex gap-2 mt-3">
+                                <a href="{{ route('local.editar', $local->id) }}" class="btn btn-sm btn-outline-light">Editar</a>
+                                <form action="{{ route('local.excluir', $local->id) }}" method="POST" class="d-inline"
+                                      onsubmit="return confirm('Tem certeza que deseja excluir esta sala?');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-sm btn-outline-danger">Excluir</button>
+                                </form>
+                            </div>
                         @else
                             <p class="text-muted">Nenhuma sala cadastrada ainda.</p>
                         @endif
@@ -554,9 +890,7 @@
             </div>
         </div>
 
-        <!-- =========================================
-             SEÇÃO HERO - DESTAQUE DO PROJETO
-             ========================================= -->
+        <!-- SEÇÃO HERO -->
         <div class="hero-section anim-fade-in">
             <div class="row align-items-center">
                 <div class="col-lg-7">
@@ -575,7 +909,6 @@
                     </p>
                 </div>
                 <div class="col-lg-5 mt-4 mt-lg-0">
-                    <!-- IMAGEM DO PROJETO (CLICÁVEL) -->
                     <div class="img-container" data-bs-toggle="modal" data-bs-target="#modalImagem">
                         <img src="{{ asset('imgs/macaco.img.png') }}" alt="Projeto Arduino Montado" class="img-projeto">
                     </div>
@@ -583,9 +916,7 @@
             </div>
         </div>
 
-        <!-- =========================================
-             DIAGRAMA DE FUNCIONAMENTO
-             ========================================= -->
+        <!-- DIAGRAMA DE FUNCIONAMENTO -->
         <div class="mt-5 anim-fade-in">
             <h3 class="text-center mb-4">Como o Sistema Funciona</h3>
             <div class="arduino-diagram">
@@ -611,9 +942,7 @@
             </div>
         </div>
 
-        <!-- =========================================
-             CARDS DE RECURSOS
-             ========================================= -->
+        <!-- CARDS DE RECURSOS -->
         <div class="mt-5 anim-fade-in">
             <h3 class="secao-titulo">Por que este sistema é essencial?</h3>
             <div class="row g-4">
@@ -641,9 +970,7 @@
             </div>
         </div>
 
-        <!-- =========================================
-             GALERIA DE IMAGENS (CLICÁVEIS)
-             ========================================= -->
+        <!-- GALERIA DE IMAGENS -->
         <div class="mt-5 anim-fade-in">
             <h3 class="secao-titulo">Galeria do Projeto</h3>
             <div class="row g-3">
@@ -667,9 +994,23 @@
 
     </div>
 
-    <!-- =========================================
-         MODAL DE IMAGEM AMPLIADA
-         ========================================= -->
+    <!-- ABISMO (aparece após escorregar) -->
+    <div class="abismo" id="abismo">
+        <h2>🕳️ Você caiu no abismo!</h2>
+        <p>Brincadeira 😄 — clique abaixo para voltar.</p>
+        <button type="button" class="btn-voltar" id="btnVoltar">Voltar</button>
+    </div>
+
+    <!-- MACACO XINGANDO -->
+    <div class="macaco-xingao-wrapper" id="macacoXingao">
+        <div class="balao-fala">
+            <button type="button" class="fechar-xinga" id="fecharXinga" aria-label="Fechar">×</button>
+            <p id="textoXinga">Seu macaco!</p>
+        </div>
+        <div class="macaco-emoji">🐒</div>
+    </div>
+
+    <!-- MODAL DE IMAGEM AMPLIADA -->
     <div class="modal fade modal-img" id="modalImagem" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
@@ -681,7 +1022,153 @@
         </div>
     </div>
 
-    <!-- Script do Bootstrap (necessário para o modal) -->
+    <!-- Script do Bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- SCRIPTS DAS BRINCADEIRAS -->
+    <script>
+        (function () {
+            /* ============================================
+               1) MORTAL SIMPLES
+               ============================================ */
+            const btnMortal = document.getElementById('btnMortal');
+            let girando = false;
+
+            btnMortal.addEventListener('click', function () {
+                if (girando) return;
+                girando = true;
+                document.body.classList.add('dando-mortal');
+                setTimeout(function () {
+                    document.body.classList.remove('dando-mortal');
+                    girando = false;
+                }, 1000);
+            });
+
+            /* ============================================
+               2) MORTAL + ESCORREGAR
+               ============================================ */
+            const btnMortalEscorregar = document.getElementById('btnMortalEscorregar');
+            const conteudoPrincipal = document.getElementById('conteudoPrincipal');
+            const abismo = document.getElementById('abismo');
+            const btnVoltar = document.getElementById('btnVoltar');
+            let animando = false;
+
+            btnMortalEscorregar.addEventListener('click', function () {
+                if (animando) return;
+                animando = true;
+
+                document.body.classList.add('dando-mortal');
+
+                setTimeout(function () {
+                    document.body.classList.remove('dando-mortal');
+                    conteudoPrincipal.classList.add('escorregando');
+                }, 1000);
+
+                setTimeout(function () {
+                    abismo.classList.add('visivel');
+                }, 3000);
+            });
+
+            btnVoltar.addEventListener('click', function () {
+                abismo.classList.remove('visivel');
+                conteudoPrincipal.classList.remove('escorregando');
+                setTimeout(function () {
+                    animando = false;
+                }, 500);
+            });
+
+            /* ============================================
+               3) CHUVA DE MACACOS (20 segundos)
+               ============================================ */
+            const btnMacacos = document.getElementById('btnMacacos');
+            const EMOJIS = ['🐒', '🐵', '🙈', '🙉', '🙊', '🦧'];
+            let macacosAtivos = false;
+
+            function criarMacaco() {
+                const macaco = document.createElement('div');
+                macaco.classList.add('macaco-corredor');
+                macaco.textContent = EMOJIS[Math.floor(Math.random() * EMOJIS.length)];
+
+                const bottomOffset = 5 + Math.random() * 60;
+                macaco.style.bottom = bottomOffset + 'px';
+
+                const tamanho = 2 + Math.random() * 2.5;
+                macaco.style.fontSize = tamanho + 'rem';
+
+                const duracao = 4 + Math.random() * 4;
+                macaco.style.animationDuration = duracao + 's';
+                macaco.style.animationDelay = (Math.random() * 1.5) + 's';
+
+                document.body.appendChild(macaco);
+
+                setTimeout(function () {
+                    if (macaco.parentNode) macaco.parentNode.removeChild(macaco);
+                }, (duracao + 2) * 1000);
+            }
+
+            btnMacacos.addEventListener('click', function () {
+                if (macacosAtivos) return;
+                macacosAtivos = true;
+                btnMacacos.disabled = true;
+
+                const DURACAO_TOTAL = 20000;
+                const inicio = Date.now();
+
+                const intervalo = setInterval(function () {
+                    if (Date.now() - inicio >= DURACAO_TOTAL) {
+                        clearInterval(intervalo);
+                        return;
+                    }
+                    criarMacaco();
+                    if (Math.random() > 0.5) criarMacaco();
+                }, 350);
+
+                setTimeout(function () {
+                    macacosAtivos = false;
+                    btnMacacos.disabled = false;
+                }, DURACAO_TOTAL);
+            });
+
+            /* ============================================
+               4) MACACO XINGANDO
+               ============================================ */
+            const btnMacacoXinga = document.getElementById('btnMacacoXinga');
+            const macacoXingao = document.getElementById('macacoXingao');
+            const textoXinga = document.getElementById('textoXinga');
+            const fecharXinga = document.getElementById('fecharXinga');
+
+            const XINGAMENTOS = [
+                'Seu macaco! 🐒',
+                'Você é um macaco! 🐵',
+                'Macaco! Macaco! Macaco! 🙈',
+                'Sai daqui, seu macaco! 🐒',
+                'Tu é um macacão! 🦧',
+                'Olha o macaco aí, gente! 🐵',
+                'Vai comer banana, seu macaco! 🍌🐒',
+                'Macaco demais, hein! 🙊',
+                'Você não passa de um macaco! 🐒',
+                'Que macaco feio! 🙉'
+            ];
+
+            let escondendoTimeout = null;
+
+            btnMacacoXinga.addEventListener('click', function () {
+                const frase = XINGAMENTOS[Math.floor(Math.random() * XINGAMENTOS.length)];
+                textoXinga.textContent = frase;
+
+                macacoXingao.classList.add('visivel');
+
+                if (escondendoTimeout) clearTimeout(escondendoTimeout);
+                escondendoTimeout = setTimeout(function () {
+                    macacoXingao.classList.remove('visivel');
+                }, 6000);
+            });
+
+            fecharXinga.addEventListener('click', function () {
+                macacoXingao.classList.remove('visivel');
+                if (escondendoTimeout) clearTimeout(escondendoTimeout);
+            });
+        })();
+    </script>
 </body>
 </html>
