@@ -5,7 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home - Sistema de Alerta Inteligente</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-    
+
+    @vite(['resources/js/app.js'])
+
     <style>
         /* =========================================
            CORREÇÃO DEFINITIVA DO FUNDO
@@ -1138,16 +1140,8 @@
             const fecharXinga = document.getElementById('fecharXinga');
 
             const XINGAMENTOS = [
-                'Seu macaco! 🐒',
-                'Você é um macaco! 🐵',
-                'Macaco! Macaco! Macaco! 🙈',
-                'Sai daqui, seu macaco! 🐒',
-                'Tu é um macacão! 🦧',
-                'Olha o macaco aí, gente! 🐵',
-                'Vai comer banana, seu macaco! 🍌🐒',
-                'Macaco demais, hein! 🙊',
-                'Você não passa de um macaco! 🐒',
-                'Que macaco feio! 🙉'
+                'Palmeiras não tem mundial! 🙉',
+                
             ];
 
             let escondendoTimeout = null;

@@ -78,10 +78,15 @@ class UsuarioController extends Controller
             $request->session()->put('token_usuario', $token);
         }
 
-        return response()->json([
+               return response()->json([
             'erro' => 'n',
             'mensagem' => $mensagem,
             'token' => $token,
+            'usuario' => [
+                'id' => $usuario->id,
+                'nome' => $usuario->nome,
+                'email' => $usuario->email,
+            ],
         ], 200);
     }
 

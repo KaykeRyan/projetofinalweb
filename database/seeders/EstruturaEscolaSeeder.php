@@ -1,5 +1,4 @@
 <?php
-// database/seeders/EstruturaEscolaSeeder.php
 
 namespace Database\Seeders;
 
@@ -11,19 +10,27 @@ class EstruturaEscolaSeeder extends Seeder
 {
     public function run(): void
     {
-        Bloco::insert([
-            ['nome' => 'Bloco 1', 'descricao' => 'Cantina', 'created_at' => now(), 'updated_at' => now()],
-            ['nome' => 'Bloco 2', 'descricao' => 'Ensino Fundamental', 'created_at' => now(), 'updated_at' => now()],
-            ['nome' => 'Bloco 3', 'descricao' => 'Ensino Médio', 'created_at' => now(), 'updated_at' => now()],
-            ['nome' => 'Bloco 4', 'descricao' => 'Laboratório, Informática e SENAI', 'created_at' => now(), 'updated_at' => now()],
-        ]);
+        $blocos = [
+            ['nome' => 'Bloco 1', 'descricao' => 'Cantina'],
+            ['nome' => 'Bloco 2', 'descricao' => 'Ensino Fundamental'],
+            ['nome' => 'Bloco 3', 'descricao' => 'Ensino Médio'],
+            ['nome' => 'Bloco 4', 'descricao' => 'Laboratório, Informática e SENAI'],
+        ];
 
-        TipoLocal::insert([
-            ['nome' => 'Cantina', 'created_at' => now(), 'updated_at' => now()],
-            ['nome' => 'Sala de Aula', 'created_at' => now(), 'updated_at' => now()],
-            ['nome' => 'Laboratório', 'created_at' => now(), 'updated_at' => now()],
-            ['nome' => 'Sala de Informática', 'created_at' => now(), 'updated_at' => now()],
-            ['nome' => 'Sala SENAI', 'created_at' => now(), 'updated_at' => now()],
-        ]);
+        foreach ($blocos as $bloco) {
+            Bloco::firstOrCreate(['nome' => $bloco['nome']], $bloco);
+        }
+
+        $tipos = [
+            'Cantina',
+            'Sala de Aula',
+            'Laboratório',
+            'Sala de Informática',
+            'Sala SENAI',
+        ];
+
+        foreach ($tipos as $nome) {
+            TipoLocal::firstOrCreate(['nome' => $nome]);
+        }
     }
 }

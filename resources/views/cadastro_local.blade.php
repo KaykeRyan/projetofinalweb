@@ -474,17 +474,13 @@
             const fecharXinga = document.getElementById('fecharXinga');
 
             // Frases de xingamento (todas chamando o usuário de macaco)
+                        // Frases do macaco
             const XINGAMENTOS = [
-                'Seu macaco! 🐒',
-                'Você é um macaco! 🐵',
-                'Macaco! Macaco! Macaco! 🙈',
-                'Sai daqui, seu macaco! 🐒',
-                'Tu é um macacão! 🦧',
-                'Olha o macaco aí, gente! 🐵',
-                'Vai comer banana, seu macaco! 🍌🐒',
-                'Macaco demais, hein! 🙊',
-                'Você não passa de um macaco! 🐒',
-                'Que macaco feio! 🙉'
+                'Palmeiras não tem mundial! 🙉',
+                'Eita, clicou de novo? 🐒',
+                'Calma, esse botão é só de brincadeira! 🙈',
+                'Vai cadastrar a sala ou vai ficar brincando? 😄',
+                'Quem clicou aqui foi você, hein! 🐵'
             ];
 
             let escondendoTimeout = null;
